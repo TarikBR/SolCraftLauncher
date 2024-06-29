@@ -431,6 +431,8 @@ JNIEXPORT void JNICALL Java_org_lwjgl_glfw_CallbackBridge_nativeSendCursorEnter(
 */
 
 void critical_send_cursor_pos(jfloat x, jfloat y) {
+ x = x * -1;
+ y = y * -1;
 #ifdef DEBUG
     LOGD("Sending cursor position \n");
 #endif
@@ -454,10 +456,10 @@ void critical_send_cursor_pos(jfloat x, jfloat y) {
         }
 
         if (!pojav_environ->isUseStackQueueCall) {
-            pojav_environ->GLFW_invoke_CursorPos((void*) pojav_environ->showingWindow, (double) (-x), (double) (-y));
+            pojav_environ->GLFW_invoke_CursorPos((void*) pojav_environ->showingWindow, (double) (x), (double) (y));
         } else {
-            pojav_environ->cursorX = -x;
-            pojav_environ->cursorY = -y;
+            pojav_environ->cursorX = x;
+            pojav_environ->cursorY = y;
         }
     }
 }
